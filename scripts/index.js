@@ -26,8 +26,6 @@ function addCards(initialCards, deleteCard) {
   });
 };
 
-addCards(initialCards, deleteCard);
-
 // @todo: Функция удаления карточки
 function deleteCard(event) {
   if (event.target.className === "card__delete-button") {
@@ -36,3 +34,5 @@ function deleteCard(event) {
     parentNode.remove();
   };
 };
+
+export {cardTemplate, placesList, createCard, addCards, deleteCard}
