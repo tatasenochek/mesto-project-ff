@@ -18,8 +18,8 @@ const closeModal = (popupElement) => {
 
 // Закрытие модального окна при нажатии на Esc
 const closeModalHandler = (event) => {
-  const openedPopup = document.querySelector(".popup_is-opened");
-  if (openedPopup && event.key === "Escape") {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_is-opened");
     closeModal(openedPopup);
   }
 };
@@ -27,10 +27,7 @@ const closeModalHandler = (event) => {
 
 // Закрытие модального окна по клику вне области или на кнопку закрытия
 const closeModalButton = (modal, event) => {
-  if (
-    modal.classList.contains("popup") &&
-    (event.target === modal || event.target.closest(".popup__close"))
-  ) {
+  if (event.target === modal || event.target.classList.contains('popup__close')) {
     closeModal(modal);
   }
 };
