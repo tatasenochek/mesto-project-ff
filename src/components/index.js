@@ -24,8 +24,6 @@ const addCards = (initialCards, deleteCard) => {
   initialCards.forEach(function (item) {
     const cardElement = createCard(item, deleteCard);
     placesList.prepend(cardElement);
-
-    imageClickHandler(cardElement)
   });
 };
 
@@ -60,8 +58,6 @@ const saveFormTypeNewCard = (event) => {
   const cardElement = createCard(cardData);
   placesList.prepend(cardElement);
   closeModal(popupTypeNewCard);
-
-  imageClickHandler(cardElement)
 };
 
 // Открытие окна с увеличенным изображением карточки
@@ -80,13 +76,6 @@ document.addEventListener("click", (event) => {
     closeModalButton(popupTypeImage, event);
 });
 
-// Добавляем обработчик клика на каждое изображение карточки для открытия модального окна
-const imageClickHandler = (cardElement) => {
-    cardElement.querySelectorAll('.card__image').forEach((image) => {
-      image.addEventListener('click', openImageModal);
-});
-}
-
 // Обработчик события клика по кнопке добавления карточки
 profileAddButton.addEventListener("click", openAddModal);
 
@@ -99,4 +88,4 @@ profileEditButton.addEventListener("click", openEditModal);
 // Обработчик события отправки формы редактирования профиля
 popupFormEdit.addEventListener("submit", handleFormTypeEdit);
 
-export { cardTemplate, addCards }
+export { cardTemplate, addCards, openImageModal }

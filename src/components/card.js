@@ -1,4 +1,4 @@
-import {cardTemplate} from './index.js'
+import {cardTemplate, openImageModal} from './index.js'
 
 // Функция создания карточки
 const createCard = ({link, name}) => {
@@ -11,8 +11,9 @@ const createCard = ({link, name}) => {
   cardElement.addEventListener("click", (event) => {
     deleteCard(event);
     toggleLikeStatus(event);
+    openImageModal(event)
   });
-
+  
   return cardElement;
 };
 
