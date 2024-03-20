@@ -24,4 +24,15 @@ const closeModalHandler = (event) => {
   }
 };
 
-export { openModal, closeModal, closeModalHandler };
+
+// Закрытие модального окна по клику вне области или на кнопку закрытия
+const closeModalButton = (modal, event) => {
+  if (
+    modal.classList.contains("popup") &&
+    (event.target === modal || event.target.closest(".popup__close"))
+  ) {
+    closeModal(modal);
+  }
+};
+
+export { openModal, closeModal, closeModalHandler, closeModalButton };
