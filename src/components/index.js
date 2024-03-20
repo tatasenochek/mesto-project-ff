@@ -37,7 +37,7 @@ const openEditModal = () => {
 };
 
 // Редактирование профиля и закрытие модального окна
-const handleFormSubmit = (event) => {
+const handleFormTypeEdit = (event) => {
   event.preventDefault();
   profileTitle.innerText = popupTitle.value;
   profileDescription.innerText = popupDescription.value;
@@ -47,18 +47,16 @@ const handleFormSubmit = (event) => {
 // Открытие окна добавления карточки
 const openAddModal = () => {
   openModal(popupTypeNewCard);
-  popupName.value = "";
-  popupLink.value = "";
+  popupFormNewCard.reset();
 };
 
 // Создание новой карточки
-const saveForm = (event) => {
+const saveFormTypeNewCard = (event) => {
   event.preventDefault();
   const cardData = {
     name: popupName.value,
     link: popupLink.value,
   };
-  initialCards.push(cardData);
   const cardElement = createCard(cardData);
   placesList.prepend(cardElement);
   closeModal(popupTypeNewCard);
@@ -93,12 +91,12 @@ const imageClickHandler = (cardElement) => {
 profileAddButton.addEventListener("click", openAddModal);
 
 // Обработчик события отправки формы добавления карточки
-popupFormNewCard.addEventListener("submit", saveForm);
+popupFormNewCard.addEventListener("submit", saveFormTypeNewCard);
 
 // Обработчик события клика по кнопке редактирования профиля
 profileEditButton.addEventListener("click", openEditModal);
 
 // Обработчик события отправки формы редактирования профиля
-popupFormEdit.addEventListener("submit", handleFormSubmit);
+popupFormEdit.addEventListener("submit", handleFormTypeEdit);
 
 export { cardTemplate, addCards }
