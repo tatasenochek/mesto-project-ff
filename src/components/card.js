@@ -27,11 +27,7 @@ const deleteCard = (event) => {
 
 // Поставить/снять лайк
 const toggleLikeStatus = (event) => {
-  if (
-    event &&
-    event.target &&
-    event.target.classList.contains("card__like-button")
-  ) {
+  if (event.target.classList.contains("card__like-button")) {
     event.target.classList.toggle("card__like-button_is-active");
   }
 };
