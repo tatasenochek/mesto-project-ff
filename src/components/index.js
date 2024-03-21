@@ -1,6 +1,6 @@
 import { openModal, closeModal, closeModalButton } from "./modal";
 import { initialCards } from "./cards.js";
-import { createCard } from "./card.js";
+import { createCard, deleteCard, toggleLikeStatus } from "./card.js";
 
 // Элементы
 const cardTemplate = document.querySelector("#card-template").content;
@@ -22,7 +22,7 @@ const popupTypeImage = document.querySelector(".popup_type_image");
 // Вывести карточки на страницу
 const addCards = (initialCards, deleteCard) => {
   initialCards.forEach(function (item) {
-    const cardElement = createCard(item, deleteCard);
+    const cardElement = createCard(item, deleteCard, toggleLikeStatus, openImageModal);
     placesList.prepend(cardElement);
   });
 };
@@ -55,7 +55,7 @@ const saveFormTypeNewCard = (event) => {
     name: popupName.value,
     link: popupLink.value,
   };
-  const cardElement = createCard(cardData);
+  const cardElement = createCard(cardData, deleteCard, toggleLikeStatus, openImageModal);
   placesList.prepend(cardElement);
   closeModal(popupTypeNewCard);
 };
