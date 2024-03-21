@@ -35,7 +35,7 @@ const openEditModal = () => {
 };
 
 // Редактирование профиля и закрытие модального окна
-const handleFormTypeEdit = (event) => {
+const saveFormTypeEdit = (event) => {
   event.preventDefault();
   profileTitle.innerText = popupTitle.value;
   profileDescription.innerText = popupDescription.value;
@@ -86,6 +86,6 @@ popupFormNewCard.addEventListener("submit", saveFormTypeNewCard);
 profileEditButton.addEventListener("click", openEditModal);
 
 // Обработчик события отправки формы редактирования профиля
-popupFormEdit.addEventListener("submit", handleFormTypeEdit);
+popupFormEdit.addEventListener("submit", saveFormTypeEdit);
 
 export { cardTemplate, addCards, openImageModal }
