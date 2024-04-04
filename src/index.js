@@ -6,5 +6,5 @@ import { cardTemplate, addCards } from './components/index.js';
 import { enableValidation, validationConfig, clearValidation } from './components/validation.js';
 import { getProfileInfo } from './components/api.js';
 
-addCards(initialCards, deleteCard);
+addCards(deleteCard);
 enableValidation(validationConfig);

@@ -2,6 +2,7 @@ import { openModal, closeModal, closeModalButton } from "./modal";
 import { initialCards } from "./cards.js";
 import { createCard, deleteCard, toggleLikeStatus } from "./card.js";
 import { clearValidation, validationConfig } from "./validation.js"
+import { getCardData } from "./api.js";
 
 // Элементы
 const cardTemplate = document.querySelector("#card-template").content;
@@ -21,12 +22,14 @@ const popupLink = document.querySelector(".popup__input_type_url");
 const popupTypeImage = document.querySelector(".popup_type_image");
 
 // Вывести карточки на страницу
-const addCards = (initialCards, deleteCard) => {
-  initialCards.forEach(function (item) {
+const addCards = async (deleteCard) => {
+  const cardsData = await getCardData();
+  cardsData.forEach(function (item) {
     const cardElement = createCard(item, deleteCard, toggleLikeStatus, openImageModal);
     placesList.prepend(cardElement);
   });
 };
+
 
 // Открытие окна редактирования профиля и заполнение полей ввода
 const openEditModal = () => {
