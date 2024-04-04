@@ -1,6 +1,7 @@
 import { openModal, closeModal, closeModalButton } from "./modal";
 import { initialCards } from "./cards.js";
 import { createCard, deleteCard, toggleLikeStatus } from "./card.js";
+import { clearValidation, validationConfig } from "./validation.js"
 
 // Элементы
 const cardTemplate = document.querySelector("#card-template").content;
@@ -32,6 +33,7 @@ const openEditModal = () => {
   openModal(popupTypeEdit);
   popupTitle.value = profileTitle.innerText;
   popupDescription.value = profileDescription.innerText;
+  clearValidation(popupFormEdit, validationConfig)
 };
 
 // Редактирование профиля и закрытие модального окна
@@ -46,6 +48,7 @@ const saveFormTypeEdit = (event) => {
 const openAddModal = () => {
   openModal(popupTypeNewCard);
   popupFormNewCard.reset();
+  clearValidation(popupFormNewCard, validationConfig)
 };
 
 // Создание новой карточки
