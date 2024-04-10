@@ -49,7 +49,7 @@ export const createCard = (
   }
 
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_is-active");
+    
   });
 
   cardElement
