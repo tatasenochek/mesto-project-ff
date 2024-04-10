@@ -1,39 +1,90 @@
-async function getProfileInfo() {
-  const profileTitle = document.querySelector(".profile__title");
-  const profileDescription = document.querySelector(".profile__description");
-  const profileImageElement = document.querySelector('.profile__image');
-  
-  return fetch('https://nomoreparties.co/v1/wff-cohort-11/users/me', {
-    method: 'GET',
-    headers: {
-      authorization: '525d9810-1f71-4b0b-b990-61c4da29ce8a'
-    }
-})
-  .then(res => res.json())
-  .then((data) => {
-    profileTitle.textContent = data.name
-    profileDescription.textContent = data.about
-    profileImageElement.style.backgroundImage = `url('${data.avatar}')`;
-  });
-}
-getProfileInfo()
+// Конфигурация для запросов
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/wff-cohort-11",
+  headers: {
+    authorization: "525d9810-1f71-4b0b-b990-61c4da29ce8a",
+    "Content-Type": "application/json",
+  },
+};
 
-async function getCardData() {
-  try {
-    const response = await fetch('https://nomoreparties.co/v1/wff-cohort-11/cards', {
-      method: 'GET',
-      headers: {
-        authorization: '525d9810-1f71-4b0b-b990-61c4da29ce8a'
-      }
-    });
-    if (!response.ok) {
-      throw new Error(`Network response was not ok (${response.status})`);
-    }
-    return response.json();
-  } catch (error) {
-    console.error('Ошибка при получении данных карточек:', error);
-    return [];
+// Обработка ответа от сервера
+const handleResponse = (res) => {
+  if (res.ok) {
+    return res.json();
   }
-}
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
 
-export {getProfileInfo, getCardData}
+//Получаем данные карточек
+export const getInitialCards = async () => {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
+  }).then((res) => handleResponse(res));
+};
+
+// Получаем данные профиля (имя, занятие)
+export const getUserInfo = async () => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "GET",
+    headers: config.headers,
+  }).then((res) => handleResponse(res));
+};
+
+//Отправляем данные профиля (имя, занятие)
+export const patchUserInfo = async (nameUser, aboutUser) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: nameUser,
+      about: aboutUser,
+    }),
+  }).then((res) => handleResponse(res));
+};
+
+// Добавление новой карточки
+export const postNewCardData = async (nameCard, linkCard) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: nameCard,
+      link: linkCard,
+    }),
+  }).then((res) => handleResponse(res));
+};
+
+// Добавление лайка
+export const putLike = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  }).then((res) => handleResponse(res));
+};
+
+// Удаление лайка
+export const deleteLike = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then((res) => handleResponse(res));
+};
+
+// Удаление своей карточки
+export const deleteMyCard = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then((res) => handleResponse(res));
+};
+
+// Изменение аватара пользователя
+export const userAvatarChanges = async (avatar) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatar,
+    }),
+  }).then((res) => handleResponse(res));
+};

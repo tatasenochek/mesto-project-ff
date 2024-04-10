@@ -127,6 +127,55 @@
           </form>
         </div>
       </div>
+      <div class="popup popup_type_avatar">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form" name="new-avatar" novalidate>
+            <input
+              id="url-input"
+              type="url"
+              name="link"
+              class="popup__input popup__input_type_url"
+              placeholder="Ссылка на картинку"
+              pattern="^(ftp|http|https):\/\/[^ ]+$"
+              data-error-message="Пожалуйста, введите корректную ссылку"
+              aria-describedby="url-input-error"
+              required
+            />
+            <span 
+              id="url-input-error"
+              class="url-input-error popup__error"
+              data-error="url"
+            ></span>
+            <button type="submit" class="button popup__button">
+              Сохранить
+            </button>
+          </form>
+          
+          <!-- <form class="popup__form" name="new-avatar" novalidate>
+            <input
+              id="url-avatar"
+              type="url"
+              name="link"
+              class="popup__input popup__input_type_avatar"
+              placeholder="Ссылка на картинку"
+              pattern="^(ftp|http|https):\/\/[^ ]+$"
+              data-error-message="Пожалуйста, введите корректную ссылку"
+              aria-describedby="url-input-error-avatar"
+              required
+            />
+            <span 
+              id="url-input-error-avatar"
+              class="popup__error"
+              data-error="url"
+            ></span>
+            <button type="submit" class="button popup__button">
+              Сохранить
+            </button> -->
+          </form>
+        </div>
+      </div>
       <div class="popup popup_type_image">
         <div class="popup__content popup__content_content_image">
           <button type="button" class="popup__close"></button>
@@ -134,6 +183,16 @@
           <p class="popup__caption"></p>
         </div>
       </div>
+      <div class="popup popup_delete-card">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Вы уверены?</h3>
+          <button type="submit" class="button popup__button popup__button-delete">
+            Да
+          </button>
+        </div>
+      </div>
+      
     </div>
 
     <template id="card-template">
@@ -142,7 +201,10 @@
         <button type="button" class="card__delete-button"></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
-          <button type="button" class="card__like-button"></button>
+          <div class="card__like">
+            <button type="button" class="card__like-button"></button>
+            <span class="card__like-counter">1</span>
+          </div>
         </div>
       </li>
     </template>

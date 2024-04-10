@@ -1,5 +1,5 @@
 //Включение валидации всех форм
-const enableValidation = (validationConfig) => {
+export const enableValidation = (validationConfig) => {
   const { formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass } = validationConfig;
 
   const formList = Array.from(document.querySelectorAll(formSelector));
@@ -10,7 +10,7 @@ const enableValidation = (validationConfig) => {
 };
 
 //Показываем сообщение об ошибке
-const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
+export const showInputError = (formElement, inputElement, errorMessage, inputErrorClass, errorClass) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
   inputElement.classList.add(inputErrorClass);
@@ -19,7 +19,7 @@ const showInputError = (formElement, inputElement, errorMessage, inputErrorClass
 };
 
 //Скрываем сообщение об ошибке
-const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
+export const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
   inputElement.classList.remove(inputErrorClass);
@@ -28,7 +28,7 @@ const hideInputError = (formElement, inputElement, inputErrorClass, errorClass) 
 };
 
 //Проверка валидности введенных данных
-const isValid = (formElement, inputElement, validationConfig) => {
+export const isValid = (formElement, inputElement, validationConfig) => {
   const { inputErrorClass, errorClass } = validationConfig;
   
   if (inputElement.validity.patternMismatch) {
@@ -45,7 +45,7 @@ const isValid = (formElement, inputElement, validationConfig) => {
 };
 
 //Установка обработчика событий всем полям ввода внутри формы
-const setEventListeners = (formElement, validationConfig) => {
+export const setEventListeners = (formElement, validationConfig) => {
   const { inputSelector, submitButtonSelector } = validationConfig;
   
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
@@ -62,14 +62,14 @@ const setEventListeners = (formElement, validationConfig) => {
 };
 
 //Проверка наличия невалидного поля
-const hasInvalidInput = (inputList) => {
+export const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
 
 //Активация\дезактивация кнопки
-const toggleButtonState = (inputList, buttonElement, validationConfig) => {
+export const toggleButtonState = (inputList, buttonElement, validationConfig) => {
   const { inactiveButtonClass } = validationConfig;
   
   if (hasInvalidInput(inputList)) {
@@ -82,7 +82,7 @@ const toggleButtonState = (inputList, buttonElement, validationConfig) => {
 };
 
 //Очистка ошибок валидации формы
-const clearValidation = (formElement, validationConfig) => {
+export const clearValidation = (formElement, validationConfig) => {
   const { inactiveButtonClass } = validationConfig;
 
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
@@ -96,7 +96,7 @@ const clearValidation = (formElement, validationConfig) => {
   toggleButtonState(inputList, buttonElement, validationConfig);
 };
 
-const validationConfig = {
+export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -104,5 +104,3 @@ const validationConfig = {
   inputErrorClass: 'popup__input_error',
   errorClass: 'popup__error-active'
 };
-
-export { enableValidation, validationConfig, clearValidation };
