@@ -1,5 +1,4 @@
-## Проектная работа Mesto
-
+# *Проектная работа Mesto* 
 [Перейти на сайт проекта](https://tatasenochek.github.io/mesto-project-ff/)
 
 [ссылка на репозиторий Github](https://github.com/tatasenochek/mesto-project-ff.git)
