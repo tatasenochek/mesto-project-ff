@@ -1,8 +1,5 @@
 import { openModal, closeModal, closeModalButton } from "./modal";
-import {
-  createCard,
-  checkOwnership
-} from "./card.js";
+import { createCard } from "./card.js";
 import {
   clearValidation,
   validationConfig,
@@ -42,7 +39,6 @@ getData()
     addCards(cardsData, userData);
     userInfo(userData);
     userAvatar(userData);
-    checkOwnership(cardsData, userId);
   })
   .catch((error) => {
     console.error("Ошибка при работе с данными:", error);
@@ -56,7 +52,7 @@ const profileEditButton = document.querySelector(".profile__edit-button"); // К
 
 const popupTypeEdit = document.querySelector(".popup_type_edit"); // Модальное окно редактирования профиля
 const popupFormEdit = popupTypeEdit.querySelector(".popup__form"); // Форма в модальном окне редактирования профиля
-const popupButtonEdit = popupTypeEdit.querySelector(".popup__button") // Кнопка в модальном окне редактирования профиля
+const popupButtonEdit = popupTypeEdit.querySelector(".popup__button"); // Кнопка в модальном окне редактирования профиля
 const popupTitle = document.querySelector(".popup__input_type_name"); //Инпут в модальном окне для имени
 const popupDescription = document.querySelector(
   ".popup__input_type_description"
@@ -64,7 +60,7 @@ const popupDescription = document.querySelector(
 
 const profileImage = document.querySelector(".profile__image"); // Аватар пользователя
 const popupTypeAvatar = document.querySelector(".popup_type_avatar"); // Модально онкно редактирования аватара
-const popupButtonAvatar = popupTypeAvatar.querySelector(".popup__button") // Кнопка в модальном окне редактирования аватара
+const popupButtonAvatar = popupTypeAvatar.querySelector(".popup__button"); // Кнопка в модальном окне редактирования аватара
 const popupFormAvatar = popupTypeAvatar.querySelector(".popup__form"); // Форма в модальном окне редактирования аватара
 const popupLinkNewAvatar = popupFormAvatar.querySelector(
   ".popup__input_type_url"
@@ -118,8 +114,8 @@ export const userAvatar = async (userData) => {
     })
     .catch((error) => {
       console.log(error);
-    })
-}
+    });
+};
 
 // Открытие окна редактирования аватара
 export const openAvatarModal = () => {
@@ -170,24 +166,24 @@ const profileAddButton = document.querySelector(".profile__add-button"); // Кн
 
 const popupTypeNewCard = document.querySelector(".popup_type_new-card"); // Модальное окно добавление новой карточки
 const popupFormNewCard = popupTypeNewCard.querySelector(".popup__form"); // Форма в модальном окне добавление новой карточки
-const popupButtonNewCard = popupFormNewCard.querySelector(".popup__button") // Кнопка в модальном окне добавление новой карточки
+const popupButtonNewCard = popupFormNewCard.querySelector(".popup__button"); // Кнопка в модальном окне добавление новой карточки
 const popupName = document.querySelector(".popup__input_type_card-name"); // Инпут для названия новой карточки
 const popupLink = document.querySelector(".popup__input_type_url"); // Инпут для ссылки новой карточки
 
 const popupTypeImage = document.querySelector(".popup_type_image"); // Модальное окно увеличивающее изображение карточки
 
 export const popupDeleteCard = document.querySelector(".popup_delete-card"); // Модальное окно для подтверждения удаления карточки
-export const popupDeleteButton = document.querySelector(".popup__button-delete"); // Кнопка удаления в модальном окне
+export const popupDeleteButton = document.querySelector(
+  ".popup__button-delete"
+); // Кнопка удаления в модальном окне
 
 // Вывести карточки на страницу
-export const addCards = async (cardsData, deleteCard, userData) => {
-  getInitialCards()
-  .then(() => {
+export const addCards = async (cardsData, deleteCard, openImageModal, userData) => {
+  getInitialCards().then(() => {
     cardsData.forEach((card) => {
       const cardElement = createCard(
         card,
         deleteCard,
-        toggleLikeStatus,
         openImageModal,
         userData
       );
@@ -216,7 +212,6 @@ export const saveFormTypeNewCard = (event) => {
       const cardElement = createCard(
         cardData,
         cardTemplate,
-        toggleLikeStatus,
         openImageModal,
         userId
       );
@@ -242,36 +237,32 @@ export const openImageModal = (event) => {
 };
 
 // Открытие окна для подтвеждения удаления карточки
-export const openDeleteModal = (cardId, cardDeleteButton) => {
+export const openDeleteModal = (cardId) => {
   openModal(popupDeleteCard);
   popupDeleteButton.addEventListener("click", () => {
-    verificationDeleteCard(cardId, cardDeleteButton);
+    verificationDeleteCard(cardId);
   });
 };
 
 // Подтверждение удаления
-export const verificationDeleteCard = (cardId, cardDeleteButton) => {
-  deleteCard(cardId, cardDeleteButton);
+export const verificationDeleteCard = (cardId) => {
+  deleteCard(cardId);
   closeModal(popupDeleteCard);
 };
 
 // Удаление карточки
-export const deleteCard = (cardId, cardDeleteButton) => {
-  deleteMyCard(cardId)
-    console.log("message")
-}
-
-// Поставить/снять лайк
-export const toggleLikeStatus = () => {
-
+export const deleteCard = (cardId) => {
+  deleteMyCard(cardId);
+  document.getElementById(cardId).remove()
 };
+
 
 // Функция для изменения текста кнопки сохранения профиля
 const setSaveButtonLoading = (saveButton, isLoading) => {
   if (isLoading) {
-    saveButton.textContent = 'Сохранение...';
+    saveButton.textContent = "Сохранение...";
   } else {
-    saveButton.textContent = 'Сохранить';
+    saveButton.textContent = "Сохранить";
   }
 };
 

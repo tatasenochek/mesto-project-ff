@@ -1,29 +1,20 @@
 import {
   cardTemplate,
   deleteCard,
-  openImageModal,
   openDeleteModal,
   verificationDeleteCard,
   popupDeleteCard,
   popupDeleteButton,
-  toggleLikeStatus,
-  userId
+  userId,
+  openImageModal
 } from "./index.js";
-import { deleteMyCard } from "./api.js";
+import { deleteMyCard, deleteLike, putLike, getInitialCards } from "./api.js";
 import { openModal, closeModal } from "./modal.js";
-
-export const checkOwnership = (cardsData, userId) => {
-  cardsData.forEach((card) => {
-    return card.owner._id !== userId;
-  });
-};
 
 // Функция создания карточки
 export const createCard = (
   card,
-  checkOwnership,
   deleteCard,
-  openImageModal,
   userData
 ) => {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -35,6 +26,7 @@ export const createCard = (
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
   const cardId = card._id;
 
+  cardElement.id = card._id
   cardImage.src = card.link;
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
@@ -48,15 +40,39 @@ export const createCard = (
     });
   }
 
+  const hasUserLiked = card.likes.some(like => (like._id ===  card.owner._id));
+
+  if (hasUserLiked) {
+    likeButton.classList.add('card__like-button_is-active');
+  }
+  
   likeButton.addEventListener("click", () => {
-    
+    const isLiked = likeButton.classList.contains('card__like-button_is-active');
+
+    if (isLiked) {
+      deleteLike(cardId)
+        .then((res) => {
+          likeCounter.textContent = res.likes.length;
+          likeButton.classList.remove('card__like-button_is-active');
+        })
+        .catch((error) => {
+          console.error('Ошибка при снятии лайка:', error);
+        });
+    } else {
+      putLike(cardId)
+        .then((res) => {
+          likeCounter.textContent = res.likes.length;
+          likeButton.classList.add('card__like-button_is-active');
+        })
+        .catch((error) => {
+          console.error('Ошибка при постановке лайка:', error);
+        });
+    }
   });
 
-  cardElement
-    .querySelector(".card__image")
-    .addEventListener("click", (event) => {
-      openImageModal(event);
-    });
+  cardImage.addEventListener("click", (event) => {
+    openImageModal(event);
+  });
 
   return cardElement;
 };
