@@ -1,5 +1,5 @@
 import { openModal, closeModal, closeModalButton } from "./modal";
-import { createCard } from "./card.js";
+import { createCard, toggleLikeState } from "./card.js";
 import {
   clearValidation,
   validationConfig,
@@ -185,7 +185,8 @@ export const addCards = async (cardsData, deleteCard, openImageModal, userData) 
         card,
         deleteCard,
         openImageModal,
-        userData
+        userData,
+        toggleLikeState
       );
       placesList.append(cardElement);
     });
