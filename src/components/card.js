@@ -54,8 +54,8 @@ export const createCard = (
 export const toggleLikeState = (card, cardId, likeButton, likeCounter) => {
   const isLiked = likeButton.classList.contains("card__like-button_is-active");
 
-  likeButton.classList.toggle('card__like-button_is-active');
-  likeCounter.textContent = card.likes.length;
+  // likeButton.classList.toggle('card__like-button_is-active');
+  // likeCounter.textContent = card.likes.length;
 
   isLiked ? deleteLike(cardId) : putLike(cardId)
   .then((res) => {
