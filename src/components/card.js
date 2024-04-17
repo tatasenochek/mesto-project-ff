@@ -1,21 +1,14 @@
-import {
-  cardTemplate,
-  deleteCard,
-  openDeleteModal,
-  verificationDeleteCard,
-  popupDeleteCard,
-  popupDeleteButton,
-  userId,
-  openImageModal
-} from "./index.js";
-import { deleteMyCard, deleteLike, putLike, getInitialCards } from "./api.js";
-import { openModal, closeModal } from "./modal.js";
+import { deleteLike, putLike } from "./api.js"
+
+const cardTemplate = document.querySelector("#card-template").content; // Шаблон для создания карточек
 
 // Функция создания карточки
 export const createCard = (
   card,
-  deleteCard,
-  userData
+  userId,
+  openDeleteModal,
+  openImageModal,
+  toggleLikeState
 ) => {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
@@ -31,12 +24,12 @@ export const createCard = (
   cardImage.alt = card.name;
   cardTitle.textContent = card.name;
   likeCounter.textContent = card.likes.length;
-
+  
   if (card.owner._id !== userId) {
     cardDeleteButton.classList.add("card__delete-button-none");
   } else {
     cardDeleteButton.addEventListener("click", () => {
-      openDeleteModal(cardId);
+      openDeleteModal({cardId, cardElement})
     });
   }
 
@@ -66,16 +59,14 @@ export const toggleLikeState = (card, cardId, likeButton, likeCounter) => {
 
   isLiked ? deleteLike(cardId) : putLike(cardId)
   .then((res) => {
-    likeCounter.textContent = res.likes.length;
     if (isLiked) {
       likeButton.classList.remove('card__like-button_is-active');
     } else {
       likeButton.classList.add('card__like-button_is-active');
     }
+    likeCounter.textContent = res.likes.length;
   })
   .catch((error) => {
     console.error('Ошибка при снятии лайка:', error);
-    likeButton.classList.toggle('card__like-button_is-active');
   });
 }
-

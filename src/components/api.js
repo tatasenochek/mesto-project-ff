@@ -16,14 +16,14 @@ const handleResponse = (res) => {
 };
 
 //Получаем данные карточек
-export const getInitialCards = async () => {
+export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
   }).then((res) => handleResponse(res));
 };
 
 // Получаем данные профиля (имя, занятие)
-export const getUserInfo = async () => {
+export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "GET",
     headers: config.headers,
@@ -31,7 +31,7 @@ export const getUserInfo = async () => {
 };
 
 //Отправляем данные профиля (имя, занятие)
-export const patchUserInfo = async (nameUser, aboutUser) => {
+export const patchUserInfo = (nameUser, aboutUser) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
     headers: config.headers,
@@ -43,7 +43,7 @@ export const patchUserInfo = async (nameUser, aboutUser) => {
 };
 
 // Добавление новой карточки
-export const postNewCardData = async (nameCard, linkCard) => {
+export const postNewCardData = (nameCard, linkCard) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
     headers: config.headers,
@@ -55,7 +55,7 @@ export const postNewCardData = async (nameCard, linkCard) => {
 };
 
 // Добавление лайка
-export const putLike = async (cardId) => {
+export const putLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
@@ -63,7 +63,7 @@ export const putLike = async (cardId) => {
 };
 
 // Удаление лайка
-export const deleteLike = async (cardId) => {
+export const deleteLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
@@ -71,7 +71,7 @@ export const deleteLike = async (cardId) => {
 };
 
 // Удаление своей карточки
-export const deleteMyCard = async (cardId) => {
+export const deleteMyCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
@@ -79,7 +79,7 @@ export const deleteMyCard = async (cardId) => {
 };
 
 // Изменение аватара пользователя
-export const userAvatarChanges = async (avatar) => {
+export const userAvatarChanges = (avatar) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
