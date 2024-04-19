@@ -52,18 +52,15 @@ export const createCard = (
 
 // Проверка статуса лайка и отправка запросов
 export const toggleLikeState = (card, cardId, likeButton, likeCounter) => {
-  const isLiked = likeButton.classList.contains("card__like-button_is-active");
+  const isLiked = likeButton.classList.contains("card__like-button_is-active")
+  const likeAction = isLiked ? deleteLike : putLike;
 
-  isLiked ? deleteLike(cardId) : putLike(cardId)
-  .then((res) => {
-    if (isLiked) {
-      likeButton.classList.remove('card__like-button_is-active');
-    } else {
-      likeButton.classList.add('card__like-button_is-active');
-    }
+  likeAction(cardId).then((res) => {
+    console.log(res)
+    likeButton.classList.toggle('card__like-button_is-active');
     likeCounter.textContent = res.likes.length;
   })
   .catch((error) => {
-    console.error('Ошибка при снятии лайка:', error);
+    console.error('Ошибка при  изменении статуса лайка:', error);
   });
 }
